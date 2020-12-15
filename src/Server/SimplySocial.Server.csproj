@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App\SimplySocial.App.csproj" />
+    <ProjectReference Include="..\Server.Core\SimplySocial.Server.Core.csproj" />
+    <ProjectReference Include="..\Server.Data\SimplySocial.Server.Data.csproj" />
+  </ItemGroup>
+
+</Project>
