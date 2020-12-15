@@ -1,0 +1,53 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+variables:
+  BuildPlatform: 'Any CPU'
+  BuildConfiguration: 'Release'
+  BuildProject: '**/SimplySocial.Server.csproj'
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UseDotNet@2
+    displayName: 'Use .Net 5 SDK'
+    inputs:
+      version: 5.x
+      packageType: sdk
+      includePreviewVersions: false
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+    
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+      feedsToUse: select
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: $(BuildProject)
+      arguments: --configuration $(BuildConfiguration)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish App'
+    inputs:
+      command: publish
+      zipAfterPublish: True
+      publishWebProjects: false
+      projects: $(BuildProject)
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+
+  - task: PublishPipelineArtifact@1
+    displayName: 'Publish App Artifact'
+    condition: succeededOrFailed()
+    inputs:
+      ArtifactName: SimplySocialApp
+      targetPath: '$(Build.ArtifactStagingDirectory)'
