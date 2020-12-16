@@ -9,8 +9,10 @@ stages:
   displayName: 'Build App'
 
   variables:
+    SQLScriptName: DbMigrate.script
+    SQLArtifactDir: $(Build.ArtifactStagingDirectory)/SQL
     BuildConfiguration: 'Release'
-    BuildProject: '**/SimplySocial.Server.csproj'
+    BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
 
   jobs: 
   - job: Build
@@ -38,12 +40,22 @@ stages:
       inputs:
         projects: $(BuildProject)
         arguments: --configuration $(BuildConfiguration)
-    - task: DotNetCoreCLI@2
-      displayName: 'Create Identity SQL'
+    - task: Bash@3
+      displayName: 'Create DB Migration Script'
       inputs:
-        command: custom
-        custom: 'ef '
-        arguments: migrations script --output $(Build.ArtifactStagingDirectory)/SQL/identity.sql --idempotent --project $(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj --context IdentityContext
+        targetType: filePath
+        filePath: $(Build.SourcesDirectory)/scripts/generate_sql_script.sh
+      env:
+        SCRIPT_NAME: $(SQLScriptName)
+        PROJECT_PATH: $(BuildProject)
+        OUTPUT_DIR: $(SQLArtifactDir)
+
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'Create Identity SQL'
+    #   inputs:
+    #     command: custom
+    #     custom: 'ef '
+    #     arguments: migrations script --output $(Build.ArtifactStagingDirectory)/SQL/identity.sql --idempotent --project $(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj --context IdentityContext
     - task: DotNetCoreCLI@2
       displayName: Publish
       inputs:
@@ -59,10 +71,10 @@ stages:
         artifactName: SimplySocialApp
         targetPath: '$(Build.ArtifactStagingDirectory)/SimplySocialApp'
     - task: PublishPipelineArtifact@1
-      displayName: 'Publish SQL Scripts'
+      displayName: 'Publish SQL Script'
       inputs:
-        artifactName: SQLScripts
-        targetPath: '$(Build.ArtifactStagingDirectory)/SQL'
+        artifactName: SQLScript
+        targetPath: '$(SQLArtifactDir)/$(SQLScriptName)'
 
 - stage: Deploy
   displayName: Deploy
@@ -92,20 +104,19 @@ stages:
         vmImage: 'windows-latest'
       steps:
         - task: DownloadPipelineArtifact@2
-          displayName: 'Download SQL Scripts'
+          displayName: 'Download SQL Script'
           inputs:
-            artifactName: SQLScripts
+            artifactName: SQLScript
             path: '$(Pipeline.Workspace)\SQL'
         
         - task: SqlDacpacDeploymentOnMachineGroup@0
           inputs:
             TaskType: 'sqlQuery'
             ExclusiveLock: true
-            ExecuteInTransaction: true
             AppLockName: '$(DBLock)'
             ServerName: '$(DBServer)'
             DatabaseName: '$(DBName)'
             SqlUsername: '$(DBUsername)'
             SqlPassword: '$(DBPassword)'
-            SqlFile: '$(Pipeline.Workspace)\SQL\identity.sql'
+            SqlFile: '$(Pipeline.Workspace)\SQL\*.sql'
             AuthScheme: 'sqlServerAuthentication'
