@@ -14,40 +14,65 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: UseDotNet@2
-    displayName: 'Use .Net 5 SDK'
-    inputs:
-      version: 5.x
-      packageType: sdk
-      includePreviewVersions: false
-      installationPath: $(Agent.ToolsDirectory)/dotnet
+stages:
+- stage: Build
+  displayName: 'Build App'
+  jobs: 
+  - job: Build
+    steps:
+
+    - task: UseDotNet@2
+      displayName: 'Use .Net 5 SDK'
+      inputs:
+        version: 5.0.x
+        packageType: sdk
+        includePreviewVersions: false
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Use dotnet ef'
+      inputs:
+        command: custom
+        custom: 'tool '
+        arguments: install --global dotnet-ef
+
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: $(BuildProject)
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: $(BuildProject)
+        arguments: --configuration $(BuildConfiguration)
     
-  - task: DotNetCoreCLI@2
-    displayName: Restore
-    inputs:
-      command: restore
-      projects: '**/*.csproj'
-      feedsToUse: select
+    - task: DotNetCoreCLI@2
+      displayName: 'Create Identity SQL'
+      inputs:
+        command: custom
+        custom: 'ef '
+        arguments: migrations script --output $(Build.SourcesDirectory)/SQL/identity.sql --idempotent --project $(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj --context IdentityContext
 
-  - task: DotNetCoreCLI@2
-    displayName: Build
-    inputs:
-      projects: $(BuildProject)
-      arguments: --configuration $(BuildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        zipAfterPublish: true
+        publishWebProjects: true
+        projects: '$(BuildProject)'
+        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Publish App'
-    inputs:
-      command: publish
-      zipAfterPublish: True
-      publishWebProjects: false
-      projects: $(BuildProject)
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Artifact'
+      condition: succeededOrFailed()
+      inputs:
+        artifactName: SimplySocialApp
+        targetPath: '$(Build.ArtifactStagingDirectory)'
 
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish App Artifact'
-    condition: succeededOrFailed()
-    inputs:
-      ArtifactName: SimplySocialApp
-      targetPath: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Artifact: SQL Scripts'
+      inputs:
+        artifactName: IdentitySQL
+        targetPath: $(Build.SourcesDirectory)/SQL
