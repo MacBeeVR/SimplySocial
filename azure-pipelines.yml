@@ -42,6 +42,8 @@ stages:
   #         arguments: install --global dotnet-ef
 
   - job: Build
+    variables:
+      NUGET_CACHE_HIT: 'false'
     steps:
     # - task: UseDotNet@2
     #   displayName: 'Use .Net 5 SDK'
@@ -62,12 +64,14 @@ stages:
       displayName: 'Cache NuGet Packages'
       inputs:
         path: $(NUGET_PACKAGES)
-        key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,!**/bin/**'
+        key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/src/Server/packages.lock.json,!**/bin/**'
         restoreKeys: |
           nuget | "$(Agent.OS)"
+        cacheHitVar: NUGET_CACHE_HIT
 
     - task: DotNetCoreCLI@2
       displayName: Restore
+      condition: ne(variables.NUGET_CACHE_HIT, 'true')
       inputs:
         command: restore
         projects: $(BuildProject)
