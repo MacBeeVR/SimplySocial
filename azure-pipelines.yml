@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: Build
@@ -83,17 +83,19 @@ stages:
             appName: sealsdev
             appType: webAppLinux
             azureSubscription: 'Free Azure Subscription (c7fc2dfb-f735-47e8-8b65-66057b28a6de)'
-            package: '$(Pipeline.Workspace)/SealsDevApp/Server.zip'
+            package: '$(Pipeline.Workspace)/SimplySocialApp/Server.zip'
         
 
     - job: DeployDatabase
       displayName: 'Deploy Database'
+      pool:
+        vmImage: 'windows-latest'
       steps:
         - task: DownloadPipelineArtifact@2
           displayName: 'Download SQL Scripts'
           inputs:
             artifactName: SQLScripts
-            path: '$(Pipeline.Workspace)/SQL'
+            path: '$(Pipeline.Workspace)\SQL'
         
         - task: SqlDacpacDeploymentOnMachineGroup@0
           inputs:
@@ -105,5 +107,5 @@ stages:
             DatabaseName: '$(DBName)'
             SqlUsername: '$(DBUsername)'
             SqlPassword: '$(DBPassword)'
-            SqlFile: '$(Pipeline.Workspace)/SQL/*.sql'
+            SqlFile: '$(Pipeline.Workspace)\SQL\*.sql'
             AuthScheme: 'sqlServerAuthentication'
