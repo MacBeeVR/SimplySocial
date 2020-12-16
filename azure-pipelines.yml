@@ -37,6 +37,7 @@ stages:
           arguments: install --global dotnet-ef
 
   - job: Build
+    dependsOn: PreBuild
     steps:
     # - task: UseDotNet@2
     #   displayName: 'Use .Net 5 SDK'
