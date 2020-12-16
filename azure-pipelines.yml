@@ -75,8 +75,7 @@ stages:
           displayName: 'Download Artifact'
           inputs:
             artifactName: SimplySocialApp
-            path: $(Pipeline.Workspace)/SimplySocialApp
-            itemPattern: '**/Server.zip'
+            path: '$(Pipeline.Workspace)/SimplySocialApp'
         
         - task: AzureWebApp@1
           displayName: 'Deploy to App Service'
@@ -94,8 +93,7 @@ stages:
           displayName: 'Download SQL Scripts'
           inputs:
             artifactName: SQLScripts
-            path: $(Pipeline.Workspace)/SQL
-            itemPattern: '*.sql'
+            path: '$(Pipeline.Workspace)/SQL'
         
         - task: SqlDacpacDeploymentOnMachineGroup@0
           inputs:
