@@ -83,7 +83,7 @@ stages:
           inputs:
             appName: sealsdev
             appType: webAppLinux
-            azureSubscription: $(AzureSubscription)
+            azureSubscription: '$(AzureSubscription)'
             package: '$(Pipeline.Workspace)/SealsDevApp/Server.zip'
 
     - job: DeployDatabase
@@ -94,6 +94,7 @@ stages:
           inputs:
             artifactName: SQLScripts
             path: $(Pipeline.Workspace)/SQL
+            itemPattern: '**/*.sql'
         
         - task: SqlDacpacDeploymentOnMachineGroup@0
           inputs:
