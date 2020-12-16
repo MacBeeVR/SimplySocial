@@ -18,26 +18,25 @@ stages:
     BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
 
   jobs: 
-  - job: PreBuild
-    displayName: 'Pre-Build'
-    steps:
-      - task: UseDotNet@2
-        displayName: 'Use .Net 5 SDK'
-        inputs:
-          version: 5.0.x
-          packageType: sdk
-          includePreviewVersions: false
-          installationPath: $(Agent.ToolsDirectory)/dotnet
+  # - job: PreBuild
+  #   displayName: 'Pre-Build'
+  #   steps:
+  #     - task: UseDotNet@2
+  #       displayName: 'Use .Net 5 SDK'
+  #       inputs:
+  #         version: 5.0.x
+  #         packageType: sdk
+  #         includePreviewVersions: false
+  #         installationPath: $(Agent.ToolsDirectory)/dotnet
       
-      - task: DotNetCoreCLI@2
-        displayName: 'Use dotnet ef'
-        inputs:
-          command: custom
-          custom: 'tool '
-          arguments: install --global dotnet-ef
+  #     - task: DotNetCoreCLI@2
+  #       displayName: 'Use dotnet ef'
+  #       inputs:
+  #         command: custom
+  #         custom: 'tool '
+  #         arguments: install --global dotnet-ef
 
   - job: Build
-    dependsOn: PreBuild
     steps:
     # - task: UseDotNet@2
     #   displayName: 'Use .Net 5 SDK'
@@ -110,6 +109,13 @@ stages:
     dependsOn: Build
     displayName: 'Prepare Build Artifact'
     steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Use dotnet ef'
+        inputs:
+          command: custom
+          custom: 'tool '
+          arguments: install --global dotnet-ef
+          
       - task: DotNetCoreCLI@2
         displayName: Publish
         inputs:
