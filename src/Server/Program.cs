@@ -19,13 +19,13 @@ namespace SimplySocial.Server
             var host = CreateHostBuilder(args).Build();
 
 #if DEBUG
-            using(var scope = host.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
                 var identityContext = scope.ServiceProvider.GetRequiredService<IdentityContext>();
-
                 await identityContext.Database.MigrateAsync();
             }
 #endif
+
             await host.RunAsync();
         }
 

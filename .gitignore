@@ -27,7 +27,8 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
-[Oo]bj/
+[Oo]bj/*
+![Oo]bj/project.assets.json
 [Ll]og/
 [Ll]ogs/
 
@@ -348,3 +349,16 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/src/Server.Core/obj/SimplySocial.Server.Core.csproj.nuget.g.targets
+/src/Server.Core/obj/SimplySocial.Server.Core.csproj.nuget.g.props
+/src/Server.Core/obj/SimplySocial.Server.Core.csproj.nuget.dgspec.json
+/src/Server.Data/obj/SimplySocial.Server.Data.csproj.nuget.g.targets
+/src/Server.Data/obj/SimplySocial.Server.Data.csproj.nuget.g.props
+/src/Server.Data/obj/SimplySocial.Server.Data.csproj.nuget.dgspec.json
+/src/Server/obj/tempkey.json
+/src/Server/obj/SimplySocial.Server.csproj.nuget.g.targets
+/src/Server/obj/SimplySocial.Server.csproj.nuget.g.props
+/src/Server/obj/SimplySocial.Server.csproj.nuget.dgspec.json
+/src/App/obj/SimplySocial.App.csproj.nuget.g.targets
+/src/App/obj/SimplySocial.App.csproj.nuget.g.props
+/src/App/obj/SimplySocial.App.csproj.nuget.dgspec.json

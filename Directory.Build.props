@@ -1,6 +1,0 @@
-<Project>
-	<PropertyGroup>
-		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-		<DisableImplicitNugetFallbackFolder>true</DisableImplicitNugetFallbackFolder>
-	</PropertyGroup>
-</Project>
