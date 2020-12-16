@@ -48,7 +48,7 @@ stages:
       displayName: Build
       inputs:
         projects: $(BuildProject)
-        arguments: --configuration $(BuildConfiguration) --no-restore
+        arguments: --configuration $(BuildConfiguration)
 
   - job: Prepare_App
     dependsOn: Build
