@@ -1950,6 +1950,7 @@
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "5.0.1",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.EntityFrameworkCore": "5.0.1",
+          "Microsoft.EntityFrameworkCore.Analyzers": "5.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.1",
           "Microsoft.Extensions.Identity.Stores": "5.0.1"
         },
@@ -6607,6 +6608,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "Microsoft.EntityFrameworkCore.Analyzers >= 5.0.1",
       "SimplySocial.Server.Data >= 1.0.0"
     ]
   },
@@ -6654,6 +6656,12 @@
     "frameworks": {
       "net5.0": {
         "targetAlias": "net5.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Analyzers": {
+            "target": "Package",
+            "version": "[5.0.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

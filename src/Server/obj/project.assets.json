@@ -2270,6 +2270,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Analyzers": "5.0.1",
           "SimplySocial.Server.Data": "1.0.0"
         },
         "compile": {
@@ -2289,6 +2290,7 @@
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "5.0.1",
           "Microsoft.AspNetCore.Identity": "2.2.0",
           "Microsoft.EntityFrameworkCore": "5.0.1",
+          "Microsoft.EntityFrameworkCore.Analyzers": "5.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.1",
           "Microsoft.Extensions.Identity.Stores": "5.0.1"
         },
@@ -7405,6 +7407,7 @@
     "net5.0": [
       "Microsoft.AspNetCore.Components.WebAssembly.Server >= 5.0.1",
       "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore >= 5.0.1",
+      "Microsoft.EntityFrameworkCore.Analyzers >= 5.0.1",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.1",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.1",
       "SimplySocial.App >= 1.0.0",
@@ -7468,6 +7471,10 @@
             "version": "[5.0.1, )"
           },
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[5.0.1, )"
+          },
+          "Microsoft.EntityFrameworkCore.Analyzers": {
             "target": "Package",
             "version": "[5.0.1, )"
           },

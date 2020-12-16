@@ -6642,6 +6642,7 @@
       "Microsoft.AspNetCore.ApiAuthorization.IdentityServer >= 5.0.1",
       "Microsoft.AspNetCore.Identity >= 2.2.0",
       "Microsoft.EntityFrameworkCore >= 5.0.1",
+      "Microsoft.EntityFrameworkCore.Analyzers >= 5.0.1",
       "Microsoft.EntityFrameworkCore.Design >= 5.0.1",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.1",
       "Microsoft.Extensions.Identity.Stores >= 5.0.1"
@@ -6697,6 +6698,10 @@
             "version": "[2.2.0, )"
           },
           "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "[5.0.1, )"
+          },
+          "Microsoft.EntityFrameworkCore.Analyzers": {
             "target": "Package",
             "version": "[5.0.1, )"
           },
