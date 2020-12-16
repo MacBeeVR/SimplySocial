@@ -34,7 +34,7 @@ stages:
     - task: Cache@2
       inputs:
         key: 'v1 | nuget | "$(Agent.OS)"|assets'
-        path: $(Build.SourcesDirectory)/$(Build.Repository.Name)/obj
+        path: $(Build.SourcesDirectory)/src/Server/obj
         cacheHitVar: CACHE_RESTORED
 
     - task: DotNetCoreCLI@2
