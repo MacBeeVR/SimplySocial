@@ -1,5 +1,10 @@
 trigger:
-- pipeline-tinkering
+  branches:
+    include:
+      - pipeline-tinkering
+  paths:
+    exclude:
+      - azure-pipelines.yml
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -110,13 +115,6 @@ stages:
     displayName: 'Prepare Build Artifact'
     steps:
       - task: DotNetCoreCLI@2
-        displayName: 'Use dotnet ef'
-        inputs:
-          command: custom
-          custom: 'tool '
-          arguments: install --global dotnet-ef
-          
-      - task: DotNetCoreCLI@2
         displayName: Publish
         inputs:
           command: publish
@@ -136,6 +134,13 @@ stages:
     dependsOn: Build
     displayName: 'Prepare SQL Artifact'
     steps:
+      - task: DotNetCoreCLI@2
+        displayName: 'Use dotnet ef'
+        inputs:
+          command: custom
+          custom: 'tool '
+          arguments: install --global dotnet-ef
+
       - task: Bash@3
         displayName: 'Create DB Migration Script'
         inputs:
