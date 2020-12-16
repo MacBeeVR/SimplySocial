@@ -83,8 +83,9 @@ stages:
           inputs:
             appName: sealsdev
             appType: webAppLinux
-            azureSubscription: '$(AzureSubscription)'
+            azureSubscription: 'Free Azure Subscription (c7fc2dfb-f735-47e8-8b65-66057b28a6de)'
             package: '$(Pipeline.Workspace)/SealsDevApp/Server.zip'
+        
 
     - job: DeployDatabase
       displayName: 'Deploy Database'
