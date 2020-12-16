@@ -18,29 +18,28 @@ stages:
 
   variables:
     BuildConfiguration: Release
-    NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
+    NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget/packages
     SQLArtifactDir: $(Build.ArtifactStagingDirectory)/SQL
     BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
 
   jobs: 
   - job: Build
-
-    variables:
-      NUGET_CACHE_HIT: 'false'
-
     steps:
     - task: Cache@2
-      displayName: 'Cache NuGet Packages'
       inputs:
+        key: 'v1 | nuget | "$(Agent.OS)"'
         path: $(NUGET_PACKAGES)
-        key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/src/Server/packages.lock.json,!**/bin/**'
-        restoreKeys: |
-          nuget | "$(Agent.OS)"
-        cacheHitVar: NUGET_CACHE_HIT
+        cacheHitVar: CACHE_RESTORED
+
+    - task: Cache@2
+      inputs:
+        key: 'v1 | nuget | "$(Agent.OS)"|assets'
+        path: $(Build.SourcesDirectory)/$(Build.Repository.Name)/obj
+        cacheHitVar: CACHE_RESTORED
 
     - task: DotNetCoreCLI@2
       displayName: Restore
-      condition: ne(variables.NUGET_CACHE_HIT, 'true')
+      condition: ne(variables.CACHE_RESTORED, 'true')
       inputs:
         command: restore
         projects: $(BuildProject)
