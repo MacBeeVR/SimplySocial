@@ -1,21 +1,20 @@
-variables:
-  BuildPlatform: 'Any CPU'
-  BuildConfiguration: 'Release'
-  BuildProject: '**/SimplySocial.Server.csproj'
-
 trigger:
 - main
-
-pool:
-  vmImage: 'ubuntu-latest'
 
 stages:
 - stage: Build
   displayName: 'Build App'
+
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+    BuildConfiguration: 'Release'
+    BuildProject: '**/SimplySocial.Server.csproj'
+
   jobs: 
   - job: Build
     steps:
-
     - task: UseDotNet@2
       displayName: 'Use .Net 5 SDK'
       inputs:
@@ -23,33 +22,28 @@ stages:
         packageType: sdk
         includePreviewVersions: false
         installationPath: $(Agent.ToolsDirectory)/dotnet
-
     - task: DotNetCoreCLI@2
       displayName: 'Use dotnet ef'
       inputs:
         command: custom
         custom: 'tool '
         arguments: install --global dotnet-ef
-
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
         command: restore
         projects: $(BuildProject)
-
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         projects: $(BuildProject)
         arguments: --configuration $(BuildConfiguration)
-    
     - task: DotNetCoreCLI@2
       displayName: 'Create Identity SQL'
       inputs:
         command: custom
         custom: 'ef '
         arguments: migrations script --output $(Build.SourcesDirectory)/SQL/identity.sql --idempotent --project $(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj --context IdentityContext
-
     - task: DotNetCoreCLI@2
       displayName: Publish
       inputs:
@@ -58,14 +52,12 @@ stages:
         publishWebProjects: true
         projects: '$(BuildProject)'
         arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Artifact'
       condition: succeededOrFailed()
       inputs:
         artifactName: SimplySocialApp
         targetPath: '$(Build.ArtifactStagingDirectory)'
-
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Artifact: SQL Scripts'
       inputs:
@@ -74,6 +66,10 @@ stages:
 
 - stage: Deploy
   displayName: Deploy
+
+  pool:
+    vmImageName: 'windows-latest'
+
   jobs:
     - job: DeployApp
       displayName: 'Deploy App'
