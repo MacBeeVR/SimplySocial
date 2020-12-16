@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 variables:
   BuildPlatform: 'Any CPU'
   BuildConfiguration: 'Release'
@@ -76,3 +71,46 @@ stages:
       inputs:
         artifactName: SQLScripts
         targetPath: $(Build.SourcesDirectory)/SQL
+
+- stage: Deploy
+  displayName: Deploy
+  jobs:
+    - job: DeployApp
+      displayName: 'Deploy App'
+      steps:
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Artifact'
+          inputs:
+            artifactName: SimplySocialApp
+            path: $(Pipeline.Workspace)/SimplySocialApp
+            itemPattern: '**/Server.zip'
+        
+        - task: AzureWebApp@1
+          displayName: 'Deploy to App Service'
+          inputs:
+            appName: sealsdev
+            appType: webAppLinux
+            azureSubscription: $(AzureSubscription)
+            package: '$(Pipeline.Workspace)/SealsDevApp/Server.zip'
+
+    - job: DeployDatabase
+      displayName: 'Deploy Database'
+      steps:
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Artifact: SQL Scripts'
+          inputs:
+            artifactName: SQLScripts
+            path: $(Pipeline.Workspace)/SQL
+        
+        - task: SqlDacpacDeploymentOnMachineGroup@0
+          inputs:
+            TaskType: 'sqlQuery'
+            ExclusiveLock: true
+            ExecuteInTransaction: true
+            AppLockName: '$(DBLock)'
+            ServerName: '$(DBServer)'
+            DatabaseName: '$(DBName)'
+            SqlUsername: '$(DBUsername)'
+            SqlPassword: '$(DBPassword)'
+            SqlFile: '$(Pipeline.Workspace)/SQL'
+            AuthScheme: 'sqlServerAuthentication'
