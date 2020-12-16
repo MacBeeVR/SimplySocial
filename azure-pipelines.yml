@@ -106,5 +106,5 @@ stages:
             DatabaseName: '$(DBName)'
             SqlUsername: '$(DBUsername)'
             SqlPassword: '$(DBPassword)'
-            SqlFile: '$(Pipeline.Workspace)/SQL'
+            SqlFile: '$(Pipeline.Workspace)/SQL/*.sql'
             AuthScheme: 'sqlServerAuthentication'
