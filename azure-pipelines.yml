@@ -138,22 +138,33 @@ stages:
     dependsOn: Build
     displayName: 'Prepare SQL Artifact'
     steps:
-      - task: DotNetCoreCLI@2
-        displayName: 'Use dotnet ef'
-        inputs:
-          command: custom
-          custom: 'tool '
-          arguments: install --global dotnet-ef
+      # - task: DotNetCoreCLI@2
+      #   displayName: 'Use dotnet ef'
+      #   inputs:
+      #     command: custom
+      #     custom: 'tool '
+      #     arguments: install --global dotnet-ef
 
-      - task: Bash@3
+      - script: |
+          dotnet tool install -g dotnet-ef
+          export PATH=$PATH:$HOME/.dotnet/tools
+          . ~/.bashrc
+          . ./scripts/generate_sql_script.sh
         displayName: 'Create DB Migration Script'
-        inputs:
-          targetType: filePath
-          filePath: $(Build.SourcesDirectory)/scripts/generate_sql_script.sh
         env:
           SCRIPT_NAME: $(SQLScriptName)
           PROJECT_PATH: $(BuildProject)
           OUTPUT_DIR: $(SQLArtifactDir)
+
+      # - task: Bash@3
+      #   displayName: 'Create DB Migration Script'
+      #   inputs:
+      #     targetType: filePath
+      #     filePath: $(Build.SourcesDirectory)/scripts/generate_sql_script.sh
+      #   env:
+      #     SCRIPT_NAME: $(SQLScriptName)
+      #     PROJECT_PATH: $(BuildProject)
+      #     OUTPUT_DIR: $(SQLArtifactDir)
         
       - task: PublishPipelineArtifact@1
         displayName: 'Publish SQL Artifact'
