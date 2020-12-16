@@ -4,12 +4,14 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  SQLScriptName: DbMigrate.script
+
 stages:
 - stage: Build
   displayName: 'Build App'
 
   variables:
-    SQLScriptName: DbMigrate.script
     SQLArtifactDir: $(Build.ArtifactStagingDirectory)/SQL
     BuildConfiguration: 'Release'
     BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
@@ -118,5 +120,5 @@ stages:
             DatabaseName: '$(DBName)'
             SqlUsername: '$(DBUsername)'
             SqlPassword: '$(DBPassword)'
-            SqlFile: '$(Pipeline.Workspace)\SQL\*.sql'
+            SqlFile: '$(Pipeline.Workspace)\SQL\$(SQLScriptName)'
             AuthScheme: 'sqlServerAuthentication'
