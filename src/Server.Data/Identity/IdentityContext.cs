@@ -59,6 +59,7 @@ namespace SimplySocial.Server.Data.Identity
                     .HasDefaultValue(false);
 
                 entity.Ignore(e => e.FullName);
+                entity.Ignore(e => e.ProfilePicture);
             });
 
             // Changing default Identity table names
