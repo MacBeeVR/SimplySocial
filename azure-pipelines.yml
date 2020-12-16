@@ -74,5 +74,5 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Artifact: SQL Scripts'
       inputs:
-        artifactName: IdentitySQL
+        artifactName: SQLScripts
         targetPath: $(Build.SourcesDirectory)/SQL
