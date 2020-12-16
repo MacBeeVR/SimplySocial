@@ -1,7 +1,7 @@
 trigger:
   branches:
     include:
-      - pipeline-tinkering
+      - main
   paths:
     exclude:
       - azure-pipelines.yml
@@ -23,43 +23,12 @@ stages:
     BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
 
   jobs: 
-  # - job: PreBuild
-  #   displayName: 'Pre-Build'
-  #   steps:
-  #     - task: UseDotNet@2
-  #       displayName: 'Use .Net 5 SDK'
-  #       inputs:
-  #         version: 5.0.x
-  #         packageType: sdk
-  #         includePreviewVersions: false
-  #         installationPath: $(Agent.ToolsDirectory)/dotnet
-      
-  #     - task: DotNetCoreCLI@2
-  #       displayName: 'Use dotnet ef'
-  #       inputs:
-  #         command: custom
-  #         custom: 'tool '
-  #         arguments: install --global dotnet-ef
-
   - job: Build
+
     variables:
       NUGET_CACHE_HIT: 'false'
+
     steps:
-    # - task: UseDotNet@2
-    #   displayName: 'Use .Net 5 SDK'
-    #   inputs:
-    #     version: 5.0.x
-    #     packageType: sdk
-    #     includePreviewVersions: false
-    #     installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'Use dotnet ef'
-    #   inputs:
-    #     command: custom
-    #     custom: 'tool '
-    #     arguments: install --global dotnet-ef
-
     - task: Cache@2
       displayName: 'Cache NuGet Packages'
       inputs:
@@ -82,41 +51,9 @@ stages:
         projects: $(BuildProject)
         arguments: --configuration $(BuildConfiguration)
 
-    # - task: Bash@3
-    #   displayName: 'Create DB Migration Script'
-    #   inputs:
-    #     targetType: filePath
-    #     filePath: $(Build.SourcesDirectory)/scripts/generate_sql_script.sh
-    #   env:
-    #     SCRIPT_NAME: $(SQLScriptName)
-    #     PROJECT_PATH: $(BuildProject)
-    #     OUTPUT_DIR: $(SQLArtifactDir)
-
-    # - task: DotNetCoreCLI@2
-    #   displayName: Publish
-    #   inputs:
-    #     command: publish
-    #     zipAfterPublish: true
-    #     publishWebProjects: true
-    #     projects: '$(BuildProject)'
-    #     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/SimplySocialApp'
-
-    # - task: PublishPipelineArtifact@1
-    #   displayName: 'Publish Artifact'
-    #   condition: succeededOrFailed()
-    #   inputs:
-    #     artifactName: SimplySocialApp
-    #     targetPath: '$(Build.ArtifactStagingDirectory)/SimplySocialApp'
-
-    # - task: PublishPipelineArtifact@1
-    #   displayName: 'Publish Artifact: SQL Script'
-    #   inputs:
-    #     artifactName: SQLScript
-    #     targetPath: '$(SQLArtifactDir)/$(SQLScriptName)'
-
   - job: Prepare_App
     dependsOn: Build
-    displayName: 'Prepare Build Artifact'
+    displayName: 'Publish Build Artifact'
     steps:
       - task: DotNetCoreCLI@2
         displayName: Publish
@@ -128,7 +65,7 @@ stages:
           arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/SimplySocialApp'
 
       - task: PublishPipelineArtifact@1
-        displayName: 'Publish Artifact'
+        displayName: 'Publish Build Artifact'
         condition: succeededOrFailed()
         inputs:
           artifactName: SimplySocialApp
@@ -136,15 +73,8 @@ stages:
 
   - job: Prepare_SQL
     dependsOn: Build
-    displayName: 'Prepare SQL Artifact'
+    displayName: 'Publish SQL Artifact'
     steps:
-      # - task: DotNetCoreCLI@2
-      #   displayName: 'Use dotnet ef'
-      #   inputs:
-      #     command: custom
-      #     custom: 'tool '
-      #     arguments: install --global dotnet-ef
-
       - script: |
           dotnet tool install -g dotnet-ef
           export PATH=$PATH:$HOME/.dotnet/tools
@@ -155,16 +85,6 @@ stages:
           SCRIPT_NAME: $(SQLScriptName)
           PROJECT_PATH: $(BuildProject)
           OUTPUT_DIR: $(SQLArtifactDir)
-
-      # - task: Bash@3
-      #   displayName: 'Create DB Migration Script'
-      #   inputs:
-      #     targetType: filePath
-      #     filePath: $(Build.SourcesDirectory)/scripts/generate_sql_script.sh
-      #   env:
-      #     SCRIPT_NAME: $(SQLScriptName)
-      #     PROJECT_PATH: $(BuildProject)
-      #     OUTPUT_DIR: $(SQLArtifactDir)
         
       - task: PublishPipelineArtifact@1
         displayName: 'Publish SQL Artifact'
@@ -196,8 +116,10 @@ stages:
 
     - job: DeployDatabase
       displayName: 'Deploy Database'
+
       pool:
         vmImage: 'windows-latest'
+
       steps:
         - task: DownloadPipelineArtifact@2
           displayName: 'Download SQL Script'
