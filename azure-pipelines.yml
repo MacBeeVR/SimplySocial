@@ -1,12 +1,12 @@
 trigger:
 - main
 
+pool:
+  vmImageName: 'windows-latest'
+
 stages:
 - stage: Build
   displayName: 'Build App'
-
-  pool:
-    vmImage: 'ubuntu-latest'
 
   variables:
     BuildConfiguration: 'Release'
@@ -66,9 +66,6 @@ stages:
 
 - stage: Deploy
   displayName: Deploy
-
-  pool:
-    vmImageName: 'windows-latest'
 
   jobs:
     - job: DeployApp
