@@ -37,6 +37,10 @@ namespace SimplySocial.Server.Configuration
                 options.Lockout.DefaultLockoutTimeSpan  = TimeSpan.FromMinutes(5);
             });
 
+            var idServerBuilder = services.AddIdentityServer()
+                .AddApiAuthorization<User, IdentityContext>()
+                .AddAspNetIdentity<User>();
+
             var env = config.GetValue<String>("ASPNETCORE_ENVIRONMENT");
             if(!String.IsNullOrWhiteSpace(env) && env.ToLowerInvariant() == "production")
             {
@@ -46,15 +50,11 @@ namespace SimplySocial.Server.Configuration
                 if (certificate == null)
                     Console.WriteLine("Certificate null");
 
-                services.AddIdentityServer()
-                    .AddSigningCredential(certificate)
-                    .AddApiAuthorization<User, IdentityContext>();
+                services.AddIdentityServer().AddSigningCredential(certificate);
             }
             else
             {
-                services.AddIdentityServer()
-                    .AddDeveloperSigningCredential()
-                    .AddApiAuthorization<User, IdentityContext>();
+                services.AddIdentityServer().AddDeveloperSigningCredential();
             }
             
 
