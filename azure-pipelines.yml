@@ -25,10 +25,15 @@ stages:
   - job: Build
     steps:
     - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        projects: '**/*.csproj'
+        arguments: --packages $(Build.SourcesDirectory)/.nuget/packages
+    - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         projects: $(BuildProject)
-        arguments: --configuration $(BuildConfiguration)
+        arguments: --configuration $(BuildConfiguration) --no-restore
 
   - job: Prepare_App
     dependsOn: Build
@@ -41,7 +46,7 @@ stages:
           zipAfterPublish: true
           publishWebProjects: false
           projects: '$(BuildProject)'
-          arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+          arguments: '--output $(Build.ArtifactStagingDirectory) --no-build --no-restore'
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Build Artifact'
@@ -98,6 +103,9 @@ stages:
 
       pool:
         vmImage: 'windows-latest'
+
+      variables:
+      - group: KeyVault
 
       steps:
         - task: DownloadPipelineArtifact@2
