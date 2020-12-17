@@ -18,6 +18,8 @@ namespace SimplySocial.Server.Configuration
             services.AddDbContext<IdentityContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("SimplySocialDB")));
 
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
             services.AddIdentity<User, IdentityRole>()
                .AddEntityFrameworkStores<IdentityContext>()
                .AddDefaultTokenProviders();
