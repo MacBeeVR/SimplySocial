@@ -89,7 +89,7 @@ stages:
           inputs:
             appName: SimplySocial
             appType: webAppLinux
-            azureSubscription: $(PrimarySubscription)
+            azureSubscription: '$(PrimarySubscription)'
             package: '$(Pipeline.Workspace)/SimplySocialApp/*.zip'
         
 
