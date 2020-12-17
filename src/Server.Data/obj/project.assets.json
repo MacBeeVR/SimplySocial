@@ -6655,11 +6655,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\codys\\Source\\Repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
+      "projectUniqueName": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
       "projectName": "SimplySocial.Server.Data",
-      "projectPath": "C:\\Users\\codys\\Source\\Repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
+      "projectPath": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
       "packagesPath": "C:\\Users\\codys\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\codys\\Source\\Repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\obj\\",
+      "outputPath": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -6736,9 +6736,6 @@
         "assetTargetFallback": true,
         "warn": true,
         "frameworkReferences": {
-          "Microsoft.AspNetCore.App": {
-            "privateAssets": "none"
-          },
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
