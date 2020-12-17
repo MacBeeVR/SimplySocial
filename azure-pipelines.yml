@@ -25,10 +25,15 @@ stages:
   - job: Build
     steps:
     - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        projects: '**/*.csproj'
+        arguments: --packages $(Build.SourcesDirectory)/.nuget/packages
+    - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
         projects: $(BuildProject)
-        arguments: --configuration $(BuildConfiguration) --output $(Build.SourcesDirectory)
+        arguments: --configuration $(BuildConfiguration) --no-restore
 
   - job: Prepare_App
     dependsOn: Build
