@@ -99,6 +99,9 @@ stages:
       pool:
         vmImage: 'windows-latest'
 
+      variables:
+      - group: KeyVault
+
       steps:
         - task: DownloadPipelineArtifact@2
           displayName: 'Download SQL Script'
