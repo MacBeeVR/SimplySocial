@@ -46,7 +46,7 @@ stages:
           zipAfterPublish: true
           publishWebProjects: false
           projects: '$(BuildProject)'
-          arguments: '--output $(Build.ArtifactStagingDirectory) --no-restore'
+          arguments: '--output $(Build.ArtifactStagingDirectory)'
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Build Artifact'
