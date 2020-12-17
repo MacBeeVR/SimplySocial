@@ -41,8 +41,10 @@ namespace SimplySocial.Server.Configuration
             if(!String.IsNullOrWhiteSpace(env) && env.ToLowerInvariant() == "production")
             {
                 var certPath    = $"/var/ssl/private/{config.GetValue<String>("WEBSITE_LOAD_CERTIFICATES")}.p12";
-                var certBytes   = File.ReadAllBytes(certPath);
-                var certificate = new X509Certificate2(certBytes);
+                var certificate = new X509Certificate2(certPath);
+
+                if (certificate == null)
+                    Console.WriteLine("Certificate null");
 
                 services.AddIdentityServer()
                     .AddSigningCredential(certificate)
