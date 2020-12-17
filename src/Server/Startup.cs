@@ -16,7 +16,8 @@ namespace SimplySocial.Server
     {
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
-            Configuration = configuration;
+            Configuration   = configuration;
+            Environment     = environment;
         }
 
         public IConfiguration       Configuration   { get; }
