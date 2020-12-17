@@ -88,7 +88,7 @@ stages:
           displayName: 'Deploy to App Service'
           inputs:
             appName: SimplySocial
-            appType: webAppLinux
+            appType: webApp
             azureSubscription: $(AzureSubscription)
             package: '$(Pipeline.Workspace)/SimplySocialApp/*.zip'
         
