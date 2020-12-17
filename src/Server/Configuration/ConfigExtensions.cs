@@ -1,13 +1,16 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
-using SimplySocial.Server.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+using SimplySocial.Server.Data.Identity;
 
 namespace SimplySocial.Server.Configuration
 {
@@ -34,7 +37,25 @@ namespace SimplySocial.Server.Configuration
                 options.Lockout.DefaultLockoutTimeSpan  = TimeSpan.FromMinutes(5);
             });
 
-            services.AddIdentityServer().AddApiAuthorization<User, IdentityContext>();
+            var env = config.GetValue<String>("ASPNETCORE_ENVIRONMENT");
+            if(!String.IsNullOrWhiteSpace(env) && env.ToLowerInvariant() == "production")
+            {
+                var certPath    = $"/var/ssl/private/{config.GetValue<String>("WEBSITE_LOAD_CERTIFICATES")}.p12";
+                var certBytes   = File.ReadAllBytes(certPath);
+                var certificate = new X509Certificate2(certBytes);
+
+                services.AddIdentityServer()
+                    .AddSigningCredential(certificate)
+                    .AddApiAuthorization<User, IdentityContext>();
+            }
+            else
+            {
+                services.AddIdentityServer()
+                    .AddDeveloperSigningCredential()
+                    .AddApiAuthorization<User, IdentityContext>();
+            }
+            
+
             services.AddAuthentication().AddIdentityServerJwt();
 
             return services;
