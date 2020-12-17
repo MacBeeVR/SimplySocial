@@ -2286,7 +2286,10 @@
         },
         "runtime": {
           "bin/placeholder/SimplySocial.Server.Core.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "SimplySocial.Server.Data/1.0.0": {
         "type": "project",
@@ -2304,7 +2307,10 @@
         },
         "runtime": {
           "bin/placeholder/SimplySocial.Server.Data.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },
