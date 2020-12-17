@@ -38,8 +38,7 @@ namespace SimplySocial.Server.Configuration
             });
 
             var idServerBuilder = services.AddIdentityServer()
-                .AddApiAuthorization<User, IdentityContext>()
-                .AddAspNetIdentity<User>();
+                .AddApiAuthorization<User, IdentityContext>();
 
             var env = config.GetValue<String>("ASPNETCORE_ENVIRONMENT");
             if(!String.IsNullOrWhiteSpace(env) && env.ToLowerInvariant() == "production")
