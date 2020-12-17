@@ -89,7 +89,7 @@ stages:
           inputs:
             appName: SimplySocial
             appType: webAppLinux
-            azureSubscription: $(AzureSubscription)
+            azureSubscription: '$(AzureSubscription)'
             package: '$(Pipeline.Workspace)/SimplySocialApp/*.zip'
         
 
@@ -109,11 +109,9 @@ stages:
         - task: SqlDacpacDeploymentOnMachineGroup@0
           inputs:
             TaskType: 'sqlQuery'
-            ExclusiveLock: true
-            AppLockName: '$(DBLock)'
-            ServerName: '$(DBServer)'
             DatabaseName: '$(DBName)'
-            SqlUsername: '$(DBUsername)'
-            SqlPassword: '$(DBPassword)'
-            SqlFile: '$(Pipeline.Workspace)\SQL\$(SQLScriptName)'
+            ServerName: '$(SealsDevDBServer)'
             AuthScheme: 'sqlServerAuthentication'
+            SqlUsername: '$(SealsDevDBServerAdmin)'
+            SqlPassword: '$(SealsDevDBServerAdminPassword)'
+            SqlFile: '$(Pipeline.Workspace)\SQL\$(SQLScriptName)'
