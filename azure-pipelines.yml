@@ -18,32 +18,12 @@ stages:
 
   variables:
     BuildConfiguration: Release
-    NUGET_PACKAGES: $(Build.SourcesDirectory)/.nuget/packages
     SQLArtifactDir: $(Build.ArtifactStagingDirectory)/SQL
     BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
 
   jobs: 
   - job: Build
     steps:
-    - task: Cache@2
-      inputs:
-        key: 'v1 | nuget | "$(Agent.OS)"'
-        path: $(NUGET_PACKAGES)
-        cacheHitVar: CACHE_RESTORED
-
-    - task: Cache@2
-      inputs:
-        key: 'v1 | nuget | "$(Agent.OS)"|assets'
-        path: $(Build.SourcesDirectory)/src/Server/obj
-        cacheHitVar: CACHE_RESTORED
-
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      condition: ne(variables.CACHE_RESTORED, 'true')
-      inputs:
-        command: restore
-        projects: $(BuildProject)
-
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
@@ -59,7 +39,6 @@ stages:
         inputs:
           command: publish
           zipAfterPublish: true
-          #if publishWebProjects is true, the projects input is skipped.
           publishWebProjects: false
           projects: '$(BuildProject)'
           arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/SimplySocialApp'
@@ -108,8 +87,9 @@ stages:
         - task: AzureWebApp@1
           displayName: 'Deploy to App Service'
           inputs:
-            appName: sealsdev
+            appName: SimplySocial
             appType: webAppLinux
+            deploymentMethod: zipDeploy
             azureSubscription: $(AzureSubscription)
             package: '$(Pipeline.Workspace)/SimplySocialApp/Server.zip'
         
