@@ -28,7 +28,7 @@ stages:
       displayName: Build
       inputs:
         projects: $(BuildProject)
-        arguments: --configuration $(BuildConfiguration)
+        arguments: --configuration $(BuildConfiguration) --output $(Build.SourcesDirectory)
 
   - job: Prepare_App
     dependsOn: Build
@@ -41,7 +41,7 @@ stages:
           zipAfterPublish: true
           publishWebProjects: false
           projects: '$(BuildProject)'
-          arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+          arguments: '--output $(Build.ArtifactStagingDirectory) --no-build'
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Build Artifact'
