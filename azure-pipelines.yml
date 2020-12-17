@@ -41,14 +41,14 @@ stages:
           zipAfterPublish: true
           publishWebProjects: false
           projects: '$(BuildProject)'
-          arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/SimplySocialApp'
+          arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
 
       - task: PublishPipelineArtifact@1
         displayName: 'Publish Build Artifact'
         condition: succeededOrFailed()
         inputs:
           artifactName: SimplySocialApp
-          targetPath: '$(Build.ArtifactStagingDirectory)/SimplySocialApp'
+          targetPath: '$(Build.ArtifactStagingDirectory)'
 
   - job: Prepare_SQL
     dependsOn: Build
@@ -91,7 +91,7 @@ stages:
             appType: webAppLinux
             deploymentMethod: zipDeploy
             azureSubscription: $(AzureSubscription)
-            package: '$(Pipeline.Workspace)/SimplySocialApp/Server.zip'
+            package: '$(Pipeline.Workspace)/SimplySocialApp/*.zip'
         
 
     - job: DeployDatabase
