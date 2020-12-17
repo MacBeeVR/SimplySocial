@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
@@ -37,27 +36,11 @@ namespace SimplySocial.Server.Configuration
                 options.Lockout.DefaultLockoutTimeSpan  = TimeSpan.FromMinutes(5);
             });
 
-            var idServerBuilder = services.AddIdentityServer()
+            services.AddIdentityServer()
                 .AddApiAuthorization<User, IdentityContext>();
 
-            var env = config.GetValue<String>("ASPNETCORE_ENVIRONMENT");
-            if(!String.IsNullOrWhiteSpace(env) && env.ToLowerInvariant() == "production")
-            {
-                var certPath    = $"/var/ssl/private/{config.GetValue<String>("WEBSITE_LOAD_CERTIFICATES")}.p12";
-                var certificate = new X509Certificate2(certPath);
-
-                if (certificate == null)
-                    Console.WriteLine("Certificate null");
-
-                services.AddIdentityServer().AddSigningCredential(certificate);
-            }
-            else
-            {
-                services.AddIdentityServer().AddDeveloperSigningCredential();
-            }
-            
-
-            services.AddAuthentication().AddIdentityServerJwt();
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
 
             return services;
         }
