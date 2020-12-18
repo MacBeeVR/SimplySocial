@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -72,6 +75,19 @@ namespace SimplySocial.Server.Configuration
                 .AddIdentityServerJwt();
 
             return services;
+        }
+
+        public static IApplicationBuilder UseCustomStaticFiles(this IApplicationBuilder app)
+        {
+            app.UseStaticFiles();
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    RequestPath     = new PathString("/css"),
+            //    FileProvider    = new PhysicalFileProvider(Path.Combine())
+            //     RedirectToAppendTrailingSlash = true
+            //});
+
+            return app;
         }
     }
 }

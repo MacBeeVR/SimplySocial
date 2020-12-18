@@ -1,0 +1,40 @@
+﻿@page "/authentication/{action}"
+@inject NavigationManager           _navManager
+@inject SignOutSessionStateManager  _signOutManager
+
+<RemoteAuthenticatorView Action="@Action" OnLogOutSucceeded="SignOutUser" ApplicationPaths="paths">
+    <LoggingIn>
+        <LoadingAnimation Content="Redirecting to Login Page" />
+    </LoggingIn>
+    <LogInFailed>
+        <LoadingAnimation Content="Login Failed" />
+    </LogInFailed>
+    <CompletingLoggingIn>
+        <LoadingAnimation Content="Completing Login" />
+    </CompletingLoggingIn>
+    <CompletingLogOut>
+        <LoadingAnimation Content="Completing Logout" />
+    </CompletingLogOut>
+    <LogOutSucceeded>
+        <LoadingAnimation Content="Logout Succeeded. Returning to Index."></LoadingAnimation>
+        <RedirectToIndex />
+    </LogOutSucceeded>
+</RemoteAuthenticatorView>
+
+@code{
+    [Parameter] public String Action { get; set; }
+
+    RemoteAuthenticationApplicationPathsOptions paths = new RemoteAuthenticationApplicationPathsOptions
+    {
+        LogInPath = "/Account/Login",
+        LogOutPath = "/Account/Logout",
+        RemoteRegisterPath = "/Account/Register",
+        RemoteProfilePath = "/Account/Manage"
+    };
+
+    public async Task SignOutUser()
+    {
+        await _signOutManager.SetSignOutState();
+        _navManager.NavigateTo(_navManager.BaseUri);
+    }
+}

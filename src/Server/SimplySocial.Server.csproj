@@ -3,7 +3,114 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>bbf15ff5-a2bf-4293-9a0b-7e3c125735d4</UserSecretsId>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+    <Content Remove="wwwroot\css\login.css" />
+    <Content Remove="wwwroot\css\login.min.css" />
+    <Content Remove="wwwroot\css\site.css" />
+    <Content Remove="wwwroot\css\site.min.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\ConfirmEmailTemplate.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\sass\bootstrap\bootstrap-grid.scss" />
+    <Content Include="Assets\sass\bootstrap\bootstrap-reboot.scss" />
+    <Content Include="Assets\sass\bootstrap\bootstrap.scss" />
+    <Content Include="Assets\sass\bootstrap\LICENSE" />
+    <Content Include="Assets\sass\bootstrap\mixins\_alert.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_badge.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_box-shadow.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_breakpoints.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_caret.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_deprecate.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_float.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_forms.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_grid.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_hover.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_image.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_lists.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_resize.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_screen-reader.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_size.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_text-hide.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_text-truncate.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_transition.scss" />
+    <Content Include="Assets\sass\bootstrap\mixins\_visibility.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_align.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_background.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_borders.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_clearfix.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_display.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_embed.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_flex.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_float.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_interactions.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_overflow.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_position.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_screenreaders.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_shadows.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_sizing.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_spacing.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_stretched-link.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_text.scss" />
+    <Content Include="Assets\sass\bootstrap\utilities\_visibility.scss" />
+    <Content Include="Assets\sass\bootstrap\vendor\_rfs.scss" />
+    <Content Include="Assets\sass\bootstrap\_alert.scss" />
+    <Content Include="Assets\sass\bootstrap\_badge.scss" />
+    <Content Include="Assets\sass\bootstrap\_breadcrumb.scss" />
+    <Content Include="Assets\sass\bootstrap\_button-group.scss" />
+    <Content Include="Assets\sass\bootstrap\_buttons.scss" />
+    <Content Include="Assets\sass\bootstrap\_card.scss" />
+    <Content Include="Assets\sass\bootstrap\_carousel.scss" />
+    <Content Include="Assets\sass\bootstrap\_close.scss" />
+    <Content Include="Assets\sass\bootstrap\_code.scss" />
+    <Content Include="Assets\sass\bootstrap\_custom-forms.scss" />
+    <Content Include="Assets\sass\bootstrap\_dropdown.scss" />
+    <Content Include="Assets\sass\bootstrap\_forms.scss" />
+    <Content Include="Assets\sass\bootstrap\_functions.scss" />
+    <Content Include="Assets\sass\bootstrap\_grid.scss" />
+    <Content Include="Assets\sass\bootstrap\_images.scss" />
+    <Content Include="Assets\sass\bootstrap\_input-group.scss" />
+    <Content Include="Assets\sass\bootstrap\_jumbotron.scss" />
+    <Content Include="Assets\sass\bootstrap\_list-group.scss" />
+    <Content Include="Assets\sass\bootstrap\_media.scss" />
+    <Content Include="Assets\sass\bootstrap\_mixins.scss" />
+    <Content Include="Assets\sass\bootstrap\_modal.scss" />
+    <Content Include="Assets\sass\bootstrap\_nav.scss" />
+    <Content Include="Assets\sass\bootstrap\_navbar.scss" />
+    <Content Include="Assets\sass\bootstrap\_pagination.scss" />
+    <Content Include="Assets\sass\bootstrap\_popover.scss" />
+    <Content Include="Assets\sass\bootstrap\_print.scss" />
+    <Content Include="Assets\sass\bootstrap\_progress.scss" />
+    <Content Include="Assets\sass\bootstrap\_reboot.scss" />
+    <Content Include="Assets\sass\bootstrap\_root.scss" />
+    <Content Include="Assets\sass\bootstrap\_spinners.scss" />
+    <Content Include="Assets\sass\bootstrap\_tables.scss" />
+    <Content Include="Assets\sass\bootstrap\_toasts.scss" />
+    <Content Include="Assets\sass\bootstrap\_tooltip.scss" />
+    <Content Include="Assets\sass\bootstrap\_transitions.scss" />
+    <Content Include="Assets\sass\bootstrap\_type.scss" />
+    <Content Include="Assets\sass\bootstrap\_utilities.scss" />
+    <Content Include="Assets\sass\bootstrap\_variables.scss" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.1" />
@@ -18,12 +125,33 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="18.4.0.30" />
+    <PackageReference Include="Wangkanai.Detection" Version="2.0.1" />
+    <PackageReference Include="Wangkanai.Detection.Browser" Version="2.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\App\SimplySocial.App.csproj" />
     <ProjectReference Include="..\Server.Core\SimplySocial.Server.Core.csproj" />
     <ProjectReference Include="..\Server.Data\SimplySocial.Server.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

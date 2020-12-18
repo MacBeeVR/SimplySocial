@@ -1,0 +1,6 @@
+﻿@code{
+    [Parameter] public  String      Text        { get; set; }
+    [Inject]    private IJSRuntime  _jsRuntime  { get; set; }
+
+    protected override async Task OnInitializedAsync() => await _jsRuntime.InvokeVoidAsync("app.setPageTitle", Text);
+}

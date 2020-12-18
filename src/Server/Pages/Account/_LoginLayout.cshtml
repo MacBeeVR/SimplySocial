@@ -1,0 +1,43 @@
+﻿@inherits SSRazorPageBase<TModel>
+@inject Wangkanai.Detection.IDetection _detection
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
+    <title>@ViewData["Title"]</title>
+    <script src="https://kit.fontawesome.com/442edb993d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/site.min.css"    asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.min.css"   asp-append-version="true" />
+</head>
+<body>
+    <div class="login-bg d-flex flex-column justify-content-center align-items-center">
+        @if(_detection.Browser.Type == Wangkanai.Detection.BrowserType.Firefox)
+        {
+            <div class="d-flex justify-content-center position-relative">
+                <div class="login-main-mz-bg position-absolute"></div>
+                <main class="login-main-mz" role="main">
+                    <div class="p-5">
+                        @RenderBody()
+                    </div>
+                </main>
+            </div>
+        }
+        else
+        {
+            <main class="login-main" role="main">
+                <div class="p-5">
+                    @RenderBody()
+                </div>
+            </main>
+        }
+
+        <partial name="_StatusMessagePartial" model="@GetStatusMessage()" />
+    </div>
+
+    @RenderSection("Scripts", false)
+
+    <ejs-scripts></ejs-scripts>
+</body>
+</html>

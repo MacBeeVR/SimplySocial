@@ -1,0 +1,129 @@
+@import '_fonts.scss';
+@import '_variables.scss';
+@import 'bootstrap/bootstrap.scss';
+
+html, body {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    font-size: 1rem !important;
+    flex-direction: column !important;
+    font-family: 'Roboto Condensed' !important;
+
+    &, main {
+        background-color: $Timberwolf;
+    }
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+    }
+}
+
+/* MAIN LAYOUT STYLES */
+
+$SidebarWidth: 15rem;
+$HeaderHeight: 3rem;
+$HeaderTextHeight: 1.5rem;
+
+#header, #sidebar {
+    &, * {
+        color: white !important;
+    }
+
+    .e-menu-icon {
+        margin-right: .5rem !important;
+    }
+
+    .e-menu-icon, .e-icons.e-caret {
+        line-height: $HeaderTextHeight !important;
+    }
+}
+
+#header {
+    height: $HeaderHeight;
+    color: white !important;
+    display: flex !important;
+    align-items: center !important;
+    background-color: $Teal-Blue !important;
+    justify-content: space-between !important;
+
+    .header-brand * {
+        cursor: pointer !important;
+        font-size: 1.5rem !important;
+        font-family: Roboto !important;
+        line-height: 2.6rem !important;
+        height: $HeaderHeight !important;
+        text-decoration: none !important;
+    }
+
+    > ul {
+        list-style: none !important;
+        font-size: 1.5rem !important;
+        font-family: Roboto !important;
+        height: $HeaderTextHeight !important;
+
+        &.left-header {
+            padding-left: .5rem !important;
+        }
+
+        &.right-header {
+            margin: 0 !important;
+        }
+    }
+
+    .e-menu-icon {
+        margin-right: .25rem !important;
+    }
+}
+
+#sidebar {
+    overflow-x: hidden !important;
+    background-color: $Raisin-Black;
+
+    #sidebar-menu {
+        background-color: transparent !important;
+
+        > h4:first-of-type {
+            color: white !important;
+            padding: .3rem !important;
+            pointer-events: none !important;
+            border-bottom: 1px solid $Bistre !important;
+        }
+
+        .navigation-menu {
+            .e-menu-item {
+                font-size: 1rem;
+                font-weight: bold !important;
+                font-family: 'Roboto Condensed' !important;
+            }
+        }
+    }
+}
+
+#content {
+    height: 100% !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    position: relative !important;
+
+    #main-container {
+        height: 100%;
+        position: relative;
+        margin-bottom: 3rem;
+
+        padding: {
+            left: 1.2rem;
+            right: 1.2rem;
+            top: 1.2rem;
+            bottom: 2rem;
+        }
+    }
+}
+
+/* END MAIN LAYOUT STYLES */

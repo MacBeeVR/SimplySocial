@@ -8,6 +8,16 @@
     <div class="main">
         <div class="top-row px-4">
             <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <a href="authentication/profile" class="ml-md-auto fa fa-user">@context.User.Identity.Name</a>
+                    <a href="authentication/logout" class="ml-md-auto fa fa-logout">Logout</a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="authentication/login" class="ml-md-auto fa fa-login">Login</a>
+                    <a href="authentication/register" class="ml-md-auto fa fa-register">Register</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
 
         <div class="content px-4">

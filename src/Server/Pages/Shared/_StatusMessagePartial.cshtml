@@ -1,0 +1,10 @@
+﻿@model StatusMessage
+
+@if(Model != null)
+{
+<div id="statusContainer" style="width: 100%;">
+    <ejs-toast id="statusToast" target="#statusContainer" title="@Model.Title" content="@Model.Content" cssClass="@Model.CssClass" timeOut="0">
+        <e-toast-position X="Center" Y="Top"></e-toast-position>
+    </ejs-toast>
+</div>
+}
