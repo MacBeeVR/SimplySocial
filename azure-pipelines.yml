@@ -1,53 +1,125 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-variables:
-  BuildPlatform: 'Any CPU'
-  BuildConfiguration: 'Release'
-  BuildProject: '**/SimplySocial.Server.csproj'
-
 trigger:
-- main
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - azure-pipelines.yml
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-  - task: UseDotNet@2
-    displayName: 'Use .Net 5 SDK'
-    inputs:
-      version: 5.x
-      packageType: sdk
-      includePreviewVersions: false
-      installationPath: $(Agent.ToolsDirectory)/dotnet
-    
-  - task: DotNetCoreCLI@2
-    displayName: Restore
-    inputs:
-      command: restore
-      projects: '**/*.csproj'
-      feedsToUse: select
+variables:
+  SQLScriptName: DbMigrate.sql
 
-  - task: DotNetCoreCLI@2
-    displayName: Build
-    inputs:
-      projects: $(BuildProject)
-      arguments: --configuration $(BuildConfiguration)
+stages:
+- stage: Build
+  displayName: 'Build App'
 
-  - task: DotNetCoreCLI@2
-    displayName: 'Publish App'
-    inputs:
-      command: publish
-      zipAfterPublish: True
-      publishWebProjects: false
-      projects: $(BuildProject)
-      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+  variables:
+    BuildConfiguration: Release
+    SQLArtifactDir: $(Build.ArtifactStagingDirectory)/SQL
+    BuildProject: '$(Build.SourcesDirectory)/src/Server/SimplySocial.Server.csproj'
 
-  - task: PublishPipelineArtifact@1
-    displayName: 'Publish App Artifact'
-    condition: succeededOrFailed()
-    inputs:
-      ArtifactName: SimplySocialApp
-      targetPath: '$(Build.ArtifactStagingDirectory)'
+  jobs: 
+  - job: Build
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        projects: '**/*.csproj'
+        arguments: --packages $(Build.SourcesDirectory)/.nuget/packages
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: $(BuildProject)
+        arguments: --configuration $(BuildConfiguration) --no-restore
+
+  - job: Prepare_App
+    dependsOn: Build
+    displayName: 'Publish Build Artifact'
+    steps:
+      - task: DotNetCoreCLI@2
+        displayName: Publish
+        inputs:
+          command: publish
+          zipAfterPublish: true
+          publishWebProjects: false
+          projects: '$(BuildProject)'
+          arguments: '--output $(Build.ArtifactStagingDirectory)'
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Build Artifact'
+        condition: succeededOrFailed()
+        inputs:
+          artifactName: SimplySocialApp
+          targetPath: '$(Build.ArtifactStagingDirectory)'
+
+  - job: Prepare_SQL
+    dependsOn: Build
+    displayName: 'Publish SQL Artifact'
+    steps:
+      - script: |
+          dotnet tool install -g dotnet-ef
+          export PATH=$PATH:$HOME/.dotnet/tools
+          . ~/.bashrc
+          . ./scripts/generate_sql_script.sh
+        displayName: 'Create DB Migration Script'
+        env:
+          SCRIPT_NAME: $(SQLScriptName)
+          PROJECT_PATH: $(BuildProject)
+          OUTPUT_DIR: $(SQLArtifactDir)
+        
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish SQL Artifact'
+        inputs:
+          artifactName: SQLScript
+          targetPath: '$(SQLArtifactDir)/$(SQLScriptName)'
+
+- stage: Deploy
+  displayName: Deploy
+
+  jobs:
+    - job: DeployApp
+      displayName: 'Deploy App'
+      steps:
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Artifact'
+          inputs:
+            artifactName: SimplySocialApp
+            path: '$(Pipeline.Workspace)/SimplySocialApp'
+        
+        - task: AzureWebApp@1
+          displayName: 'Deploy to App Service'
+          inputs:
+            appName: SimplySocial
+            appType: webAppLinux
+            azureSubscription: '$(AzureSubscription)'
+            package: '$(Pipeline.Workspace)/SimplySocialApp/*.zip'
+        
+
+    - job: DeployDatabase
+      displayName: 'Deploy Database'
+
+      pool:
+        vmImage: 'windows-latest'
+
+      variables:
+      - group: KeyVault
+
+      steps:
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download SQL Script'
+          inputs:
+            artifactName: SQLScript
+            path: '$(Pipeline.Workspace)\SQL'
+        
+        - task: SqlDacpacDeploymentOnMachineGroup@0
+          inputs:
+            TaskType: 'sqlQuery'
+            DatabaseName: '$(DBName)'
+            ServerName: '$(SealsDevDBServer)'
+            AuthScheme: 'sqlServerAuthentication'
+            SqlUsername: '$(SealsDevDBServerAdmin)'
+            SqlPassword: '$(SealsDevDBServerAdminPassword)'
+            SqlFile: '$(Pipeline.Workspace)\SQL\$(SQLScriptName)'
