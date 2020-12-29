@@ -6649,20 +6649,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\CS\\.nuget\\packages\\": {}
+    "C:\\Users\\codys\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CS\\Documents\\Projects\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
+      "projectUniqueName": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
       "projectName": "SimplySocial.Server.Data",
-      "projectPath": "C:\\Users\\CS\\Documents\\Projects\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
-      "packagesPath": "C:\\Users\\CS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CS\\Documents\\Projects\\SimplySocial\\src\\Server.Data\\obj\\",
+      "projectPath": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\SimplySocial.Server.Data.csproj",
+      "packagesPath": "C:\\Users\\codys\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\Server.Data\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\CS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\codys\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -6738,7 +6743,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

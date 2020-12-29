@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Identity\Migrations\" />
+    <Folder Include="UserData\Migrations\" />
   </ItemGroup>
 
 </Project>

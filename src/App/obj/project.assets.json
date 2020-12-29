@@ -1374,20 +1374,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\CS\\.nuget\\packages\\": {}
+    "C:\\Users\\codys\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\CS\\Documents\\Projects\\SimplySocial\\src\\App\\SimplySocial.App.csproj",
+      "projectUniqueName": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\App\\SimplySocial.App.csproj",
       "projectName": "SimplySocial.App",
-      "projectPath": "C:\\Users\\CS\\Documents\\Projects\\SimplySocial\\src\\App\\SimplySocial.App.csproj",
-      "packagesPath": "C:\\Users\\CS\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\CS\\Documents\\Projects\\SimplySocial\\src\\App\\obj\\",
+      "projectPath": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\App\\SimplySocial.App.csproj",
+      "packagesPath": "C:\\Users\\codys\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\codys\\source\\repos\\MacBeeVR\\SimplySocial\\src\\App\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\CS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\codys\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -1453,7 +1458,7 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.NETCore.App.Runtime.browser-wasm",
-            "version": "[5.0.0, 5.0.0]"
+            "version": "[5.0.1, 5.0.1]"
           }
         ],
         "frameworkReferences": {
@@ -1461,7 +1466,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {

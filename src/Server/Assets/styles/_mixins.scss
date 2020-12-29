@@ -1,0 +1,4 @@
+﻿@mixin ClampWidth($min, $max) {
+    min-width: $min;
+    max-width: $max;
+}

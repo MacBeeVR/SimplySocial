@@ -9,9 +9,6 @@ namespace SimplySocial.Server.Data.Identity
 {
     public class User : IdentityUser
     {
-        public Boolean HasProfilePic { get; set; }
-        public Byte[] ProfilePicture { get; set; }
-
         #region Personal Data
         [PersonalData]
         public String FirstName { get; set; }

@@ -1,0 +1,25 @@
+﻿@import '_fonts.scss';
+@import 'bootstrap/scss/bootstrap.scss';
+
+html, body {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    font-size: 1rem !important;
+    flex-direction: column !important;
+    font-family: 'Roboto Condensed' !important;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+    }
+}
+
+#header {
+
+}

@@ -17,8 +17,7 @@ namespace SimplySocial.Server.Data.Identity
 {
     public class IdentityContext : ApiAuthorizationDbContext<User>
     {
-        private readonly IWebHostEnvironment                _hostEnvironment;
-        private readonly IOptions<OperationalStoreOptions>  _operationalStoreOptions;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
         public IdentityContext(
             IWebHostEnvironment hostEnvironment,
@@ -26,8 +25,7 @@ namespace SimplySocial.Server.Data.Identity
             IOptions<OperationalStoreOptions> operationalStoreOptions)
                 : base(options, operationalStoreOptions)
         {
-            _hostEnvironment            = hostEnvironment;
-            _operationalStoreOptions    = operationalStoreOptions;
+            _hostEnvironment = hostEnvironment;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -54,12 +52,7 @@ namespace SimplySocial.Server.Data.Identity
                     .HasMaxLength(50)
                     .HasColumnName("LastName");
 
-                entity.Property(e => e.HasProfilePic)
-                    .HasColumnName("HasProfilePic")
-                    .HasDefaultValue(false);
-
                 entity.Ignore(e => e.FullName);
-                entity.Ignore(e => e.ProfilePicture);
             });
 
             // Changing default Identity table names

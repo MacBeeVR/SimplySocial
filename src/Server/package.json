@@ -1,0 +1,33 @@
+{
+  "name": "assets",
+  "version": "0.0.1",
+  "description": "Assets for the Simply Social Application",
+  "scripts": {
+    "dev": "webpack --mode=development --config  webpack.config.js --watch --progress --profile",
+    "build": "webpack --mode=development --config webpack.config.js  --progress --profile",
+    "prod": "webpack --mode=production --config webpack.config.js --progress"
+  },
+  "author": "Cody Seals",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "^10.1.0",
+    "bootstrap": "^4.5.3",
+    "css-loader": "^5.0.1",
+    "extract-loader": "^5.1.0",
+    "file-loader": "^6.2.0",
+    "postcss-loader": "^4.1.0",
+    "sass": "^1.30.0",
+    "sass-loader": "^10.1.0",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.0",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@material/button": "^8.0.0"
+  },
+  "-vs-binding": {
+    "BeforeBuild": [
+      "build"
+    ]
+  }
+}
