@@ -171,3 +171,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+src/Server/obj/project.assets.json
+src/Server.Data/obj/project.assets.json
+src/Server.Core/obj/project.assets.json
