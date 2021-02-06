@@ -21,7 +21,7 @@ namespace SimplySocial.Server
         {
             Configuration   = configuration;
             Environment     = environment;
-
+            
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(
                 Configuration.GetValue<String>("Syncfusion:Licenses:NetCore"));
         }

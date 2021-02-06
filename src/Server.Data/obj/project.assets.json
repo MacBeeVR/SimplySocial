@@ -6676,7 +6676,8 @@
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files (x86)\\Syncfusion\\Essential Studio\\ASP.NET Core - EJ2\\18.3.0.47\\NuGetPackages": {},
         "C:\\Program Files (x86)\\Syncfusion\\Essential Studio\\Blazor\\18.3.0.47\\NuGetPackages": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://www.myget.org/F/discord-net/api/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
