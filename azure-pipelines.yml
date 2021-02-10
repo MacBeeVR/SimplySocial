@@ -35,6 +35,8 @@ stages:
       inputs:
         projects: $(BuildProject)
         arguments: --configuration $(BuildConfiguration) --no-restore
+    
+    - script: npm run build-prod
 
   - job: Prepare_App
     dependsOn: Build
@@ -56,26 +58,26 @@ stages:
           artifactName: SimplySocialApp
           targetPath: '$(Build.ArtifactStagingDirectory)'
 
-  - job: Prepare_SQL
-    dependsOn: Build
-    displayName: 'Publish SQL Artifact'
-    steps:
-      - script: |
-          dotnet tool install -g dotnet-ef
-          export PATH=$PATH:$HOME/.dotnet/tools
-          . ~/.bashrc
-          . ./scripts/generate_sql_script.sh
-        displayName: 'Create DB Migration Script'
-        env:
-          SCRIPT_NAME: $(SQLScriptName)
-          PROJECT_PATH: $(BuildProject)
-          OUTPUT_DIR: $(SQLArtifactDir)
+  # - job: Prepare_SQL
+  #   dependsOn: Build
+  #   displayName: 'Publish SQL Artifact'
+  #   steps:
+  #     - script: |
+  #         dotnet tool install -g dotnet-ef
+  #         export PATH=$PATH:$HOME/.dotnet/tools
+  #         . ~/.bashrc
+  #         . ./scripts/generate_sql_script.sh
+  #       displayName: 'Create DB Migration Script'
+  #       env:
+  #         SCRIPT_NAME: $(SQLScriptName)
+  #         PROJECT_PATH: $(BuildProject)
+  #         OUTPUT_DIR: $(SQLArtifactDir)
         
-      - task: PublishPipelineArtifact@1
-        displayName: 'Publish SQL Artifact'
-        inputs:
-          artifactName: SQLScript
-          targetPath: '$(SQLArtifactDir)/$(SQLScriptName)'
+  #     - task: PublishPipelineArtifact@1
+  #       displayName: 'Publish SQL Artifact'
+  #       inputs:
+  #         artifactName: SQLScript
+  #         targetPath: '$(SQLArtifactDir)/$(SQLScriptName)'
 
 - stage: Deploy
   displayName: Deploy
