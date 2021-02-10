@@ -99,28 +99,28 @@ stages:
             package: '$(Pipeline.Workspace)/SimplySocialApp/*.zip'
         
 
-    - job: DeployDatabase
-      displayName: 'Deploy Database'
+    # - job: DeployDatabase
+    #   displayName: 'Deploy Database'
 
-      pool:
-        vmImage: 'windows-latest'
+    #   pool:
+    #     vmImage: 'windows-latest'
 
-      variables:
-      - group: KeyVault
+    #   variables:
+    #   - group: KeyVault
 
-      steps:
-        - task: DownloadPipelineArtifact@2
-          displayName: 'Download SQL Script'
-          inputs:
-            artifactName: SQLScript
-            path: '$(Pipeline.Workspace)\SQL'
+    #   steps:
+    #     - task: DownloadPipelineArtifact@2
+    #       displayName: 'Download SQL Script'
+    #       inputs:
+    #         artifactName: SQLScript
+    #         path: '$(Pipeline.Workspace)\SQL'
         
-        - task: SqlDacpacDeploymentOnMachineGroup@0
-          inputs:
-            TaskType: 'sqlQuery'
-            DatabaseName: '$(DBName)'
-            ServerName: '$(SealsDevDBServer)'
-            AuthScheme: 'sqlServerAuthentication'
-            SqlUsername: '$(SealsDevDBServerAdmin)'
-            SqlPassword: '$(SealsDevDBServerAdminPassword)'
-            SqlFile: '$(Pipeline.Workspace)\SQL\$(SQLScriptName)'
+    #     - task: SqlDacpacDeploymentOnMachineGroup@0
+    #       inputs:
+    #         TaskType: 'sqlQuery'
+    #         DatabaseName: '$(DBName)'
+    #         ServerName: '$(SealsDevDBServer)'
+    #         AuthScheme: 'sqlServerAuthentication'
+    #         SqlUsername: '$(SealsDevDBServerAdmin)'
+    #         SqlPassword: '$(SealsDevDBServerAdminPassword)'
+    #         SqlFile: '$(Pipeline.Workspace)\SQL\$(SQLScriptName)'
