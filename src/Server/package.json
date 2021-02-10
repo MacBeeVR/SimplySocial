@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "description": "Assets for the Simply Social Application",
   "scripts": {
+    "build-prod": "SET NODE_ENV=production && webpack -p --config webpack.config.js --progress",
+    "build-dev": "SET NODE_ENV=development && webpack -d --config webpack.config.js --watch --progress --profile",
     "dev": "webpack --mode=development --config  webpack.config.js --watch --progress --profile",
     "build": "webpack --mode=development --config webpack.config.js  --progress --profile",
     "prod": "webpack --mode=production --config webpack.config.js --progress"

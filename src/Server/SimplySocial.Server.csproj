@@ -6,6 +6,11 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
+  <Target Name="AfterBuild">
+    <Exec Condition="$(Configuration) == 'Debug'"   Command="npm run build-dev" />
+    <Exec Condition="$(Configuration) == 'Release'" Command="npm run build-prod" />
+  </Target>
+  
   <ItemGroup>
     <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\fonts\**" />
