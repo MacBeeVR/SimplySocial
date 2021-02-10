@@ -36,7 +36,7 @@ stages:
         projects: $(BuildProject)
         arguments: --configuration $(BuildConfiguration) --no-restore
     
-    - script: npm run build-prod
+    - script: cd $(Build.SourcesDirectory) && npm run build-prod
 
   - job: Prepare_App
     dependsOn: Build
